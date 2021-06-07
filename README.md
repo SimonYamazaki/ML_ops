@@ -1,7 +1,15 @@
-ML_ops_cc
+ML_ops 
 ==============================
 
 Repository for ML_ops course on DTU
+
+
+Using this repository a CNN can be trained for the FashionMNIST data. 
+
+
+
+
+
 
 Project Organization
 ------------
@@ -55,3 +63,5 @@ Project Organization
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
+
