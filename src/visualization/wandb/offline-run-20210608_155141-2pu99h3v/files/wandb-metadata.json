@@ -1,0 +1,22 @@
+{
+    "os": "Darwin-18.7.0-x86_64-i386-64bit",
+    "python": "3.7.9",
+    "heartbeatAt": "2021-06-08T13:51:43.759697",
+    "startedAt": "2021-06-08T13:51:41.996245",
+    "docker": null,
+    "cpu_count": 4,
+    "cuda": "10.1.105",
+    "args": [],
+    "state": "running",
+    "program": "visualize.py",
+    "codePath": "src/visualization/visualize.py",
+    "git": {
+        "remote": "https://github.com/SimonYamazaki/ML_ops.git",
+        "commit": "38f30672706319723b9f4c31c9db09fd3a9578b0"
+    },
+    "email": "simon-yamaza@hotmail.com",
+    "root": "/Users/simonyamazaki/ML_ops",
+    "host": "simons-air-2.clients.wireless.dtu.dk",
+    "username": "simonyamazaki",
+    "executable": "/Users/simonyamazaki/opt/anaconda3/envs/ml_ops/bin/python"
+}

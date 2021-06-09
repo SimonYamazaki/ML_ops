@@ -15,7 +15,7 @@ def compute_conv_dim(dim_size, kernel_size, padding_conv1=0, stride_conv=1,n_con
 
 
 class MyAwesomeModel(nn.Module):
-    def __init__(self,image_dim = 28,kernel_size = 5,filters = 32,fc_features = 128,n_classes = 10):
+    def __init__(self,image_dim = 28,kernel_size = 5,filters = 32,fc_features = 128,n_classes = 10, get_feature_layer = False):
         super().__init__()
 
         self.image_dim = image_dim
@@ -23,7 +23,8 @@ class MyAwesomeModel(nn.Module):
         self.filters = filters
         self.fc_features = fc_features
         self.n_classes = n_classes
-        
+        self.get_feature_layer = get_feature_layer
+
         self.conv1 = Conv2d(in_channels = 1,
                              out_channels = self.filters,
                              kernel_size = self.kernel_size)
@@ -42,28 +43,58 @@ class MyAwesomeModel(nn.Module):
 
         self.fc2 = nn.Linear(self.fc_features, self.n_classes)
         
-        self.dropout = nn.Dropout(p=0.2)
+        self.dropout1 = nn.Dropout(p=0.2)
+        self.dropout2 = nn.Dropout(p=0.2)
+        self.dropout3 = nn.Dropout(p=0.2)
 
-        
+        self.relu = nn.ReLU()
+        self.logSM = nn.LogSoftmax(dim=1)
+
     def forward(self, x):
         x = self.conv1(x)
-        x = F.relu(x)
-        x = self.dropout(x)
-        
-        x = self.conv2(x)
-        x = F.relu(x)
-        x = self.dropout(x)
-        
-        x = self.conv3(x)
-        x = F.relu(x)
-        
-        x = x.view(x.shape[0], -1)
-        x = self.fc1(x)
-        x = F.relu(x)
-        x = self.dropout(x)
-        
-        x = self.fc2(x)
-        x = F.log_softmax(x,dim=1)
+        x = self.relu(x)
+        x = self.dropout1(x)
 
-        return x
+        x = self.conv2(x)
+        x = self.relu(x)
+        x = self.dropout2(x)
+
+        x = self.conv3(x)
+        x = self.relu(x)
+
+        x = x.view(x.shape[0], -1)
+        x1 = self.fc1(x)
+
+        x = self.relu(x1)
+        x = self.dropout3(x)
+
+        x1 = self.fc2(x)
+        x = self.logSM(x1)
+
+        if self.get_feature_layer:
+            return x1
+        else:
+            return x
     
+
+"""
+image_dim = 28
+kernel_size = 5
+filters = 32
+fc_features = 128
+n_classes = 10 
+
+from src.data.data import mnist
+
+model = MyAwesomeModel(image_dim,kernel_size,filters,fc_features,n_classes)
+trainloader, _ = mnist()
+n_batches = len(trainloader)
+model.train()
+
+criterion = nn.NLLLoss()  
+optimizer = optim.Adam(model.parameters(), lr=1e-4)
+
+for images, labels in trainloader:
+    print(images.shape)
+    log_ps = model(images)
+"""

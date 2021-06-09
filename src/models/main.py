@@ -12,16 +12,33 @@ from src.models.model import MyAwesomeModel
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import FigureCanvasPdf, PdfPages
 from matplotlib.figure import Figure
+
 import numpy as np
+import wandb
 
 
-def load_checkpoint(filepath):
+with open("../../wandb.key" , "r") as handle:
+    wandb_key = handle.readlines()[0]
+
+wandb.login(key=wandb_key)
+wandb.init(project='FashionMNIST_CNN', entity=None)
+
+config = wandb.config
+config.learning_rate = 1e-4
+config.filters = 32
+config.epochs = 1
+config.kernel_size = 5
+config.fc_features = 128
+config.image_dim = 28 
+config.n_classes = 10
+
+def load_checkpoint(filepath,get_feature_layer=False):
     checkpoint = torch.load(filepath)
     model = MyAwesomeModel(checkpoint['image_dim'],checkpoint['kernel_size'],checkpoint['filters'],
-                           checkpoint['fc_features'],checkpoint['n_classes'])
+                           checkpoint['fc_features'],checkpoint['n_classes'],get_feature_layer=get_feature_layer)
     model.load_state_dict(checkpoint['state_dict'])
     return model
-    
+
 
 
 class TrainOREvaluate(object):
@@ -52,11 +69,11 @@ class TrainOREvaluate(object):
         print(args)
         
         # TODO: Implement training loop here
-        image_dim = 28
-        kernel_size = 5
-        filters = 32
-        fc_features = 128
-        n_classes = 10 
+        image_dim = config.image_dim
+        kernel_size = config.kernel_size
+        filters = config.filters
+        fc_features = config.fc_features
+        n_classes = config.n_classes
         
         model = MyAwesomeModel(image_dim,kernel_size,filters,fc_features,n_classes)
         trainloader, _ = mnist()
@@ -64,8 +81,8 @@ class TrainOREvaluate(object):
         model.train()
         
         criterion = nn.NLLLoss()  
-        optimizer = optim.Adam(model.parameters(), lr=1e-4)
-        epochs = 3
+        optimizer = optim.Adam(model.parameters(), lr=config.learning_rate)
+        epochs = config.epochs
         
         train_losses = []
         train_accs = [] 
@@ -98,6 +115,8 @@ class TrainOREvaluate(object):
                 train_losses.append(running_loss)
                 t_acc = t_acc/n_batches
                 train_accs.append(t_acc)
+                wandb.log({"loss": running_loss})
+                wandb.log({"accuracy": t_acc})
                 print('Loss: {0} Accuracy: {1} '.format(running_loss,t_acc))
         
         now = datetime.now()
@@ -105,7 +124,7 @@ class TrainOREvaluate(object):
 
         y_axis = ['Loss', 'Accuracy']
         measures = [train_losses, train_accs]
-        with PdfPages('../../reports/figures/train_measures'+dt_string+'.pdf') as pages:
+        """"with PdfPages('../../reports/figures/train_measures'+dt_string+'.pdf') as pages:
             for i in range(2):
                 fig = Figure()
                 ax = fig.gca()
@@ -113,7 +132,15 @@ class TrainOREvaluate(object):
                 ax.set_xlabel('epoch')
                 ax.set_ylabel(y_axis[i])
                 canvas = FigureCanvasPdf(fig)
-                canvas.print_figure(pages)
+                canvas.print_figure(pages)"""
+
+        for i in range(len(measures)):
+            plt.figure()
+            plt.plot(measures[i])
+            plt.xlabel('epoch')
+            plt.ylabel(y_axis[i])
+            wandb.log({f"Train {y_axis[0]}": wandb.Image(plt)})
+        #wandb.log({"img": [wandb.Image(im, caption="Cafe")]})
 
         checkpoint = {'image_dim': image_dim,
               'kernel_size': kernel_size,

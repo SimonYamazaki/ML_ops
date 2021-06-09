@@ -21,7 +21,12 @@ print(args)
 input_path='../../data/FashionMNIST/processed/test.pt'
 output_path='../../data/FashionMNIST/processed/infer_imgs_100'
 
-get_infer_numpy_data(input_path,output_path)
+def get_infer_numpy_data(input_path,output_path):
+    _,_ = mnist()
+    data = torch.load(input_path)
+    infer_imgs = data[0][:100,:,:].numpy()
+    np.save(output_path, infer_imgs)
+
 
 #%%
 """
