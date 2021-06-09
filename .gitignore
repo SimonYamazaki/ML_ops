@@ -5,6 +5,8 @@ __pycache__/
 
 data/
 
+.github/workflow/flake8.yml
+
 # C extensions
 *.so
 
