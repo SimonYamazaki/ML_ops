@@ -4,7 +4,7 @@ import torch
 
 class Test_data:
     trainset,testset ,_, _ = mnist(get_dataset=True)
-
+        
     def test_dataset_len(self):
         assert len(self.trainset) == 60000 and len(self.testset) == 10000
 
