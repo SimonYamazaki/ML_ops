@@ -2,7 +2,7 @@ import torch
 import numpy as np
 from torchvision import datasets, transforms
 
-def mnist(batch_size=64):
+def mnist(get_dataset=False,batch_size=64):
     
     # Define a transform to normalize the data
     transform = transforms.Compose([transforms.ToTensor(),
@@ -19,7 +19,10 @@ def mnist(batch_size=64):
     testset = datasets.FashionMNIST('/Users/simonyamazaki/ML_ops/data/', download=True, train=False, transform=transform)
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size, shuffle=True)
 
-    return trainloader, testloader
+    if get_dataset:
+        return trainset, testset, trainloader, testloader
+    else:
+        return trainloader, testloader
 
 
 def get_infer_numpy_data(input_path='../../data/FashionMNIST/processed/test.pt',
