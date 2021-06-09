@@ -49,7 +49,6 @@ shortuuid==1.0.1
 six==1.16.0
 sklearn==0.0
 smmap==4.0.0
--e git+https://github.com/SimonYamazaki/ML_ops.git@5efeefef74fdbd5cf71b7b5471d07d38fda68742#egg=src
 subprocess32==3.5.4
 threadpoolctl==2.1.0
 toml==0.10.2

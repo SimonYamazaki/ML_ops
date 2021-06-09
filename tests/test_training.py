@@ -1,9 +1,10 @@
 
 
-from src.models.main import TrainOREvaluate
-import torch 
-
 import pytest
+import torch
+
+from src.models.main import TrainOREvaluate
+
 
 @pytest.mark.parametrize("x", [0, 1, 2])
 

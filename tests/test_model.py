@@ -1,8 +1,9 @@
 
+import torch
+
 from src.data.data import mnist
 from src.models.model import MyAwesomeModel
 
-import torch 
 
 class Test_model:
     trainset,testset,trainloader,testloader = mnist(get_dataset=True)

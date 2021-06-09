@@ -1,10 +1,9 @@
 # content of test_sysexit.py
 import pytest
+import torch
 
 from src.data.data import mnist
 from src.models.model import MyAwesomeModel
-
-import torch 
 
 trainloader,testloader,_,_ = mnist(get_dataset=True)
 model = MyAwesomeModel()

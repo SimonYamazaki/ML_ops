@@ -1,11 +1,13 @@
 #%%
-import torch
-from torchvision import transforms 
-from src.models.main import load_checkpoint
 import argparse
-import sys 
-import numpy as np 
+import sys
+
+import numpy as np
+import torch
+from torchvision import transforms
+
 from src.data.data import get_infer_numpy_data
+from src.models.main import load_checkpoint
 
 #%%
 """
@@ -18,13 +20,14 @@ print(args)
 """
 #%%
 
-input_path='../../data/FashionMNIST/processed/test.pt'
-output_path='../../data/FashionMNIST/processed/infer_imgs_100'
+input_path = "../../data/FashionMNIST/processed/test.pt"
+output_path = "../../data/FashionMNIST/processed/infer_imgs_100"
 
-def get_infer_numpy_data(input_path,output_path):
-    _,_ = mnist()
+
+def get_infer_numpy_data(input_path, output_path):
+    _, _ = mnist()
     data = torch.load(input_path)
-    infer_imgs = data[0][:100,:,:].numpy()
+    infer_imgs = data[0][:100, :, :].numpy()
     np.save(output_path, infer_imgs)
 
 
@@ -48,8 +51,9 @@ with torch.no_grad():
 """
 
 
-model = load_checkpoint('../../models/checkpoint.pth')
+model = load_checkpoint("../../models/checkpoint.pth")
 from src.data.data import mnist
+
 _, testloader = mnist()
 
 images, labels = next(iter(testloader))
@@ -62,9 +66,6 @@ with torch.no_grad():
 f = open("../../infer_classes.txt", "w")
 f.write(str(classes))
 f.close()
-
-
-
 
 
 """
