@@ -6,7 +6,7 @@ from src.models.model import MyAwesomeModel
 
 import torch 
 
-trainloader,testloader = mnist()
+trainloader,testloader,_,_ = mnist(get_dataset=True)
 model = MyAwesomeModel()
 
 def model_forward():

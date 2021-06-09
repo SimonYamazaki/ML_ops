@@ -9,14 +9,16 @@ def mnist(get_dataset=False,batch_size=64):
                                     transforms.Normalize((0.5,), (0.5,))])
 
     # Download and load the training data
-    trainset = datasets.FashionMNIST('/Users/simonyamazaki/ML_ops/data/', download=True, train=True, transform=transform)
+    trainset = datasets.MNIST('~/.pytorch/MNIST_data/', download=True, train=True, transform=transform)
+    #trainset = datasets.FashionMNIST('/Users/simonyamazaki/ML_ops/data/', download=True, train=True, transform=transform)
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True)
 
     #trainset = datasets.MNIST('~/.pytorch/MNIST_data/', download=True, train=True, transform=transform)
     #trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
     
     # Download and load the test data
-    testset = datasets.FashionMNIST('/Users/simonyamazaki/ML_ops/data/', download=True, train=False, transform=transform)
+    testset = datasets.MNIST('~/.pytorch/MNIST_data/', download=True, train=False, transform=transform)
+    #testset = datasets.FashionMNIST('/Users/simonyamazaki/ML_ops/data/', download=True, train=False, transform=transform)
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size, shuffle=True)
 
     if get_dataset:

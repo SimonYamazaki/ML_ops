@@ -1,4 +1,6 @@
+appdirs==1.4.4
 attrs==21.2.0
+black==21.5b2
 certifi==2020.12.5
 chardet==4.0.0
 click==8.0.1
@@ -6,6 +8,7 @@ configparser==5.0.2
 coverage==5.5
 cycler==0.10.0
 docker-pycreds==0.4.0
+flake8==3.9.2
 gitdb==4.0.7
 GitPython==3.1.17
 idna==2.10
@@ -14,8 +17,11 @@ iniconfig==1.1.1
 joblib==1.0.1
 kiwisolver==1.3.1
 matplotlib==3.4.2
+mccabe==0.6.1
+mypy-extensions==0.4.3
 numpy==1.20.3
 packaging==20.9
+pathspec==0.8.1
 pathtools==0.1.2
 Pillow==8.2.0
 plotly==4.14.3
@@ -24,6 +30,8 @@ promise==2.3
 protobuf==3.17.2
 psutil==5.8.0
 py==1.10.0
+pycodestyle==2.7.0
+pyflakes==2.3.1
 pyparsing==2.4.7
 PyQt5==5.12
 PyQt5-sip==4.19.19
@@ -31,6 +39,7 @@ PyQtWebEngine==5.12
 pytest==6.2.4
 python-dateutil==2.8.1
 PyYAML==5.4.1
+regex==2021.4.4
 requests==2.25.1
 retrying==1.3.3
 scikit-learn==0.24.2
@@ -40,12 +49,13 @@ shortuuid==1.0.1
 six==1.16.0
 sklearn==0.0
 smmap==4.0.0
--e git+https://github.com/SimonYamazaki/ML_ops.git@48382ef34e93ff08069007f3098c13023543fed3#egg=src
+-e git+https://github.com/SimonYamazaki/ML_ops.git@5efeefef74fdbd5cf71b7b5471d07d38fda68742#egg=src
 subprocess32==3.5.4
 threadpoolctl==2.1.0
 toml==0.10.2
 torch==1.8.1
 torchvision==0.9.1
+typed-ast==1.4.3
 typing-extensions==3.10.0.0
 urllib3==1.26.5
 wandb==0.10.31
