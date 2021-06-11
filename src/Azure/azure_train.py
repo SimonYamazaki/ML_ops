@@ -7,7 +7,7 @@ from azureml.widgets import RunDetails
 azure_env = Environment.from_pip_requirements(name="azure-env", file_path="../../azure_requirements.txt")
 
 # Create a script config
-script_config = ScriptRunConfig(source_directory='Azure',
+script_config = ScriptRunConfig(source_directory='src',
                                 script='azure_main.py',
                                 environment=azure_env) 
 
