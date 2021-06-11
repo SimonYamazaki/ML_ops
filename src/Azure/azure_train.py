@@ -9,7 +9,8 @@ azure_env = Environment.from_pip_requirements(name="azure-env", file_path="../..
 # Create a script config
 script_config = ScriptRunConfig(source_directory='',
                                 script='azure_main.py',
-                                environment=azure_env) 
+                                environment=azure_env,
+                                arguments = ['command', 'train']) 
 
 # submit the experiment run
 experiment_name = 'First_MNIST_azure'
