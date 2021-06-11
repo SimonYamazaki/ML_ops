@@ -17,7 +17,13 @@ from src.models.model import MyAwesomeModel
 import azureml.core
 from azureml.core import Workspace, Run
 
-ws = Workspace.from_config()
+from azureml.core.authentication import InteractiveLoginAuthentication
+ia = InteractiveLoginAuthentication(tenant_id='f251f123-c9ce-448e-9277-34bb285911d9')
+
+ws = Workspace.get(name='ML_ops',
+                     subscription_id='3256dba5-2e98-4c8b-b9a4-f34b68b28b8b',
+                     resource_group='Best_recource_group',auth=ia)
+
 run = Run.get_context()
 
 def load_checkpoint(filepath, get_feature_layer=False):
@@ -40,7 +46,7 @@ class TrainOREvaluate(object):
     """
 
     def __init__(
-        self, manual_parse=None, log_wandb=True, testing_mode=True, test_layer=3
+        self, manual_parse=None, log_wandb=False, testing_mode=False, test_layer=3
     ):
         self.learning_rate = 1e-4
         self.filters = 32
@@ -83,6 +89,7 @@ class TrainOREvaluate(object):
                 parser.print_help()
                 exit(1)
             # use dispatch pattern to invoke method with same name
+            print(args.command)
             getattr(self, args.command)()
         else:
             getattr(self, manual_parse)()

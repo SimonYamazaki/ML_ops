@@ -4,4 +4,4 @@ matplotlib
 torch
 torchvision
 wandb
--e git+https://github.com/SimonYamazaki/ML_ops.git
+-e git+https://github.com/SimonYamazaki/ML_ops.git@main#egg=src
