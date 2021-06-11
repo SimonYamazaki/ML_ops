@@ -61,4 +61,4 @@ run = experiment.submit(config=script_config)
 #RunDetails(run).show()
 
 # Block until the experiment run has completed
-run.wait_for_completion()
+#run.wait_for_completion()
