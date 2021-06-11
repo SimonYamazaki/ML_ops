@@ -13,7 +13,15 @@ script_config = ScriptRunConfig(source_directory='Azure',
 
 # submit the experiment run
 experiment_name = 'First_MNIST_azure'
-ws = Workspace.from_config()
+
+from azureml.core.authentication import InteractiveLoginAuthentication
+ia = InteractiveLoginAuthentication(tenant_id='f251f123-c9ce-448e-9277-34bb285911d9')
+# You can find tenant id under azure active directory->properties
+ws = Workspace.get(name='ML_ops',
+                     subscription_id='3256dba5-2e98-4c8b-b9a4-f34b68b28b8b',
+                     resource_group='Best_recource_group',auth=ia)
+
+#ws = Workspace.from_config()
 experiment = Experiment(workspace=ws, name=experiment_name)
 run = experiment.submit(config=script_config)
 
