@@ -19,10 +19,17 @@ with open('req.txt', 'w') as f:
 #azure_env = Environment.from_conda_specification(name='azure-env', file_path='../../ml_ops.yml')
 
 azure_env = Environment("azure_env")
+conda_dep = CondaDependencies()
+
+for pkg in req_lines:
+    conda_dep.add_conda_package(pkg)
+
+#conda_dep.add_pip_package("pillow==5.4.1")
+azure_env.python.conda_dependencies=conda_dep
 
 # Ensure the required packages are installed (we need pip, scikit-learn and Azure ML defaults)
-packages = CondaDependencies.create(conda_dependencies_file_path='../../ml_ops.yml')
-azure_env.python.conda_dependencies = packages
+#packages = CondaDependencies.create(conda_dependencies_file_path='../../ml_ops.yml')
+#azure_env.python.conda_dependencies = packages
 
 # Create a script config
 script_config = ScriptRunConfig(source_directory='',
