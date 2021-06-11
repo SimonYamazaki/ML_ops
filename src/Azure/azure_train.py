@@ -16,7 +16,7 @@ with open('req.txt', 'w') as f:
     f.writelines(req_lines)
 
 #azure_env = Environment.from_pip_requirements(name="azure-env", file_path="req.txt")
-azure_env = Environment.from_conda_specification(name='azure-env', file_path='../../ml_ops.yml')
+azure_env = Environment.from_conda_specification(name='azure-env', file_path='../../ml_ops2.yml')
 
 # Create a script config
 script_config = ScriptRunConfig(source_directory='',
