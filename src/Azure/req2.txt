@@ -1,0 +1,7 @@
+azureml-sdk
+azureml-widgets
+matplotlib
+torch
+torchvision
+wandb
+-e git+https://github.com/SimonYamazaki/ML_ops.git

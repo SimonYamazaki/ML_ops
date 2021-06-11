@@ -4,11 +4,11 @@ import os
 from datetime import datetime
 
 import matplotlib.pyplot as plt
-import numpy as np
+#import numpy as np
 import torch
-import wandb
-from matplotlib.backends.backend_pdf import FigureCanvasPdf, PdfPages
-from matplotlib.figure import Figure
+#import wandb
+#from matplotlib.backends.backend_pdf import FigureCanvasPdf, PdfPages
+#from matplotlib.figure import Figure
 from torch import nn, optim
 
 from src.data.data import mnist
@@ -16,7 +16,6 @@ from src.models.model import MyAwesomeModel
 
 import azureml.core
 from azureml.core import Workspace, Run
-import joblib
 
 ws = Workspace.from_config()
 run = Run.get_context()

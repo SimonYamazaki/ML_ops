@@ -2,7 +2,7 @@ from azureml.core import Experiment, ScriptRunConfig, Environment, Workspace
 from azureml.core.conda_dependencies import CondaDependencies
 
 from azureml.widgets import RunDetails
-
+"""
 # Create a Python environment for the experiment
 with open('../../azure_requirements.txt') as f:
     lines = f.readlines()
@@ -10,26 +10,32 @@ with open('../../azure_requirements.txt') as f:
 req_lines = []
 for l in lines:
     no_ver_line = l.split('==')[0]
-    req_lines.append(no_ver_line)
+    req_lines.append(no_ver_line+'\n')
+
+print(req_lines)
 
 with open('req.txt', 'w') as f:
     f.writelines(req_lines)
 
-#azure_env = Environment.from_pip_requirements(name="azure-env", file_path="req.txt")
+"""
+azure_env = Environment.from_pip_requirements(name="azure-env", file_path="req2.txt")
 #azure_env = Environment.from_conda_specification(name='azure-env', file_path='../../ml_ops.yml')
 
-azure_env = Environment("azure_env")
-conda_dep = CondaDependencies()
+#azure_env = Environment("azure_env")
+#conda_dep = CondaDependencies()
+#for pkg in req_lines:
+    #conda_dep.add_conda_package(pkg)
+    #conda_dep.add_pip_package("pillow==5.4.1")
+    #conda_dep.set_pip_requirements(pip_requirements) # list of strings 
+#conda_dep.set_python_version(string)
+#azure_env.python.conda_dependencies=conda_dep
 
-for pkg in req_lines:
-    conda_dep.add_conda_package(pkg)
-
-#conda_dep.add_pip_package("pillow==5.4.1")
-azure_env.python.conda_dependencies=conda_dep
+#azure_env.register(workspace=ws)
 
 # Ensure the required packages are installed (we need pip, scikit-learn and Azure ML defaults)
 #packages = CondaDependencies.create(conda_dependencies_file_path='../../ml_ops.yml')
 #azure_env.python.conda_dependencies = packages
+
 
 # Create a script config
 script_config = ScriptRunConfig(source_directory='',
