@@ -4,9 +4,19 @@ from azureml.core.conda_dependencies import CondaDependencies
 from azureml.widgets import RunDetails
 
 # Create a Python environment for the experiment
-#azure_env = Environment.from_pip_requirements(name="azure-env", file_path="../../azure_requirements.txt")
-azure_env = Environment.from_conda_specification(name='azure-env', file_path='../../ml_ops.yml')
-azure_env.set_python_version('3.8')
+with open('../../azure_requirements.txt') as f:
+    lines = f.readlines()
+
+req_lines = []
+for l in lines:
+    no_ver_line = l.split('==')[0]
+    req_lines.append(no_ver_line)
+
+with open('req.txt', 'w') as f:
+    f.writelines(req_lines)
+
+azure_env = Environment.from_pip_requirements(name="azure-env", file_path="req.txt")
+#azure_env = Environment.from_conda_specification(name='azure-env', file_path='../../ml_ops.yml')
 
 # Create a script config
 script_config = ScriptRunConfig(source_directory='',
