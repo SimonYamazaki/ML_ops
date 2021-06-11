@@ -26,7 +26,7 @@ experiment = Experiment(workspace=ws, name=experiment_name)
 run = experiment.submit(config=script_config)
 
 # Show the running experiment run in the notebook widget
-RunDetails(run).show()
+#RunDetails(run).show()
 
 # Block until the experiment run has completed
 run.wait_for_completion()
