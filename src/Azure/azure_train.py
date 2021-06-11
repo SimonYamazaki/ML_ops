@@ -4,7 +4,7 @@ from azureml.core.conda_dependencies import CondaDependencies
 from azureml.widgets import RunDetails
 
 # Create a Python environment for the experiment
-azure_env = Environment.from_pip_requirements(name="azure-env", file_path="azure_requirements.txt")
+azure_env = Environment.from_pip_requirements(name="azure-env", file_path="../../azure_requirements.txt")
 
 # Create a script config
 script_config = ScriptRunConfig(source_directory='Azure',
