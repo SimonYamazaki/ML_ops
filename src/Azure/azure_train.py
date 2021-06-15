@@ -1,6 +1,6 @@
 from azureml.core import Experiment, ScriptRunConfig, Environment, Workspace
 from azureml.core.conda_dependencies import CondaDependencies
-
+import os
 from azureml.widgets import RunDetails
 """
 # Create a Python environment for the experiment
@@ -18,7 +18,10 @@ with open('req.txt', 'w') as f:
     f.writelines(req_lines)
 
 """
-azure_env = Environment.from_pip_requirements(name="azure-env", file_path="req2.txt")
+dir_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+
+azure_env = Environment.from_pip_requirements(name="azure-env", file_path=dir_path+'/src/azure/req3.txt')
 #azure_env = Environment.from_conda_specification(name='azure-env', file_path='../../ml_ops.yml')
 
 #azure_env = Environment("azure_env")
@@ -36,10 +39,9 @@ azure_env = Environment.from_pip_requirements(name="azure-env", file_path="req2.
 #packages = CondaDependencies.create(conda_dependencies_file_path='../../ml_ops.yml')
 #azure_env.python.conda_dependencies = packages
 
-
 # Create a script config
-script_config = ScriptRunConfig(source_directory='',
-                                script='azure_main.py',
+script_config = ScriptRunConfig(source_directory=dir_path+'/',
+                                script='src/azure/azure_main.py',
                                 environment=azure_env,
                                 arguments = ['train']) 
 

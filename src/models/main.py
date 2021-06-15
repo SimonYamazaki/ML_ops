@@ -34,11 +34,11 @@ class TrainOREvaluate(object):
     """
 
     def __init__(
-        self, manual_parse=None, log_wandb=True, testing_mode=True, test_layer=3
+        self, manual_parse=None, log_wandb=True, testing_mode=False, test_layer=3
     ):
         self.learning_rate = 1e-4
         self.filters = 32
-        self.epochs = 1
+        self.epochs = 2
         self.kernel_size = 5
         self.fc_features = 128
         self.image_dim = 28
@@ -103,13 +103,12 @@ class TrainOREvaluate(object):
 
         criterion = nn.NLLLoss()
         optimizer = optim.Adam(model.parameters(), lr=self.learning_rate)
-        epochs = self.epochs
 
         train_losses = []
         train_accs = []
 
-        for e in range(epochs):
-            print("epoch {0}/{1}".format(e, epochs))
+        for e in range(self.epochs):
+            print("epoch {0}/{1}".format(e, self.epochs))
             running_loss = 0
             t_acc = 0
             batch_ii = 0

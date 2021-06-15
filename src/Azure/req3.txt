@@ -1,0 +1,6 @@
+azureml-sdk
+azureml-widgets
+matplotlib
+torch
+torchvision
+wandb

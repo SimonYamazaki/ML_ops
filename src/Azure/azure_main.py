@@ -46,8 +46,8 @@ class TrainOREvaluate(object):
     """
 
     def __init__(
-        self, manual_parse=None, log_wandb=False, testing_mode=False, test_layer=3
-    ):
+        self, manual_parse=None, log_wandb=False, testing_mode=False, test_layer=3):
+
         self.learning_rate = 1e-4
         self.filters = 32
         self.epochs = 1
@@ -156,8 +156,9 @@ class TrainOREvaluate(object):
                 train_losses.append(running_loss)
                 t_acc = t_acc / n_batches
                 train_accs.append(t_acc)
-                wandb.log({"loss": running_loss})
-                wandb.log({"accuracy": t_acc})
+                if self.log_wandb:
+                    wandb.log({"loss": running_loss})
+                    wandb.log({"accuracy": t_acc})
                 run.log('Accuracy',t_acc)
                 print("Loss: {0} Accuracy: {1} ".format(running_loss, t_acc))
 
@@ -184,7 +185,6 @@ class TrainOREvaluate(object):
                 plt.ylabel(y_axis[i])
                 if self.log_wandb:
                     wandb.log({f"Train {y_axis[0]}": wandb.Image(plt)})
-            # wandb.log({"img": [wandb.Image(im, caption="Cafe")]})
 
             checkpoint = {
                 "image_dim": self.image_dim,
@@ -195,8 +195,24 @@ class TrainOREvaluate(object):
                 "state_dict": model.state_dict(),
             }
 
-            torch.save(checkpoint, "../../models/azure_models/" + "checkpoint_" + dt_string + ".pth")
+            # Save the trained model
+            model_file = "checkpoint_" + dt_string + ".pkl"
+            joblib.dump(value=model, filename=model_file)
+
+            dir_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+            model_path = dir_path + '/models/azure_models/' + model_file
+            run.upload_file(name = model_path, path_or_stream = './' + model_file)
+
+            # Complete the run
             run.complete()
+
+            # Register the model
+            run.register_model(model_path=model_path, model_name='MNIST_model',
+                            tags={'Training context':'Inline Training'},
+                            properties={'Accuracy': run.get_metrics()['Accuracy']})
+
+            #torch.save(checkpoint, "../../models/azure_models/" + "checkpoint_" + dt_string + ".pth")
 
     def evaluate(self):
         print("Evaluating until hitting the ceiling")
